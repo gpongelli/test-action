@@ -29,7 +29,8 @@ jobs:
       - name: run python
         id: run_python
         run: |
-          echo "run_script=$(python script_ok.py)" >> $GITHUB_OUTPUT
+          python script_ok.py
+          echo "run_script=$?" >> $GITHUB_OUTPUT
 
       - name: check python execution
         if: steps.run_python.outputs.run_script < 0
