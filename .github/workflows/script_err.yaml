@@ -31,6 +31,10 @@ jobs:
         run: |
           echo "run_script=$(python script_err.py)" >> $GITHUB_OUTPUT
 
+      - name: echo exit code
+        run: |
+          echo "${{ steps.run_python.outputs.run_script }}"
+
       - name: check python execution
         if: steps.run_python.outputs.run_script < 0
         run: |
