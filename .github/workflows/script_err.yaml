@@ -31,10 +31,12 @@ jobs:
         continue-on-error: true
         run: |
           python script_err.py
-          echo "run_script=$?" >> $GITHUB_OUTPUT
+          echo "run_script=$(($?))" >> $GITHUB_OUTPUT
+          echo "random_number=$(($RANDOM % 2))" >> $GITHUB_OUTPUT
 
       - name: echo exit code
         run: |
+          echo "${{ steps.run_python.outputs.random_number }}"
           echo "${{ steps.run_python.outputs.run_script }}"
 
       - name: check python execution
