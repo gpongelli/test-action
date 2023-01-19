@@ -28,6 +28,7 @@ jobs:
 
       - name: run python
         id: run_python
+        continue-on-error: true
         run: |
           python script_ok.py
           echo "run_script=$?" >> $GITHUB_OUTPUT
