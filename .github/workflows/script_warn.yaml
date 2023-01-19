@@ -1,4 +1,4 @@
-name: auto commit
+name: script warn
 
 on:
   # Allows you to run this workflow manually from the Actions tab

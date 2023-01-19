@@ -1,4 +1,4 @@
-name: auto commit
+name: script ok
 
 on:
   # Allows you to run this workflow manually from the Actions tab
