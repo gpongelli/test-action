@@ -35,9 +35,9 @@ jobs:
 
       # changes for other action
       - name: change readme AGAIN
-          run: |
-            echo "second action" >> ./README.md
-            echo "second action" >> ./LICENSE
+        run: |
+          echo "second action" >> ./README.md
+          echo "second action" >> ./LICENSE
 
       # alternative action
       - name: Git Auto Commit
