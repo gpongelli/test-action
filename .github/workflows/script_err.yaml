@@ -29,7 +29,8 @@ jobs:
       - name: run python
         id: run_python
         run: |
-          echo "run_script=$(python script_err.py)" >> $GITHUB_OUTPUT
+          python script_err.py
+          echo "run_script=$?" >> $GITHUB_OUTPUT
 
       - name: echo exit code
         run: |
