@@ -47,3 +47,9 @@ jobs:
           commit_user_name: Gabriele Pongelli  # My GitHub Actions Bot # defaults to "github-actions[bot]"
           commit_user_email: gpongelli@users.noreply.github.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           # commit_author: Gabriele Pongelli <gpongelli@users.noreply.github.com> # defaults to author of the commit that triggered the run
+      - name: "Run if changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: echo "Changes!"
+      - name: "Run if no changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: echo "No Changes!"
