@@ -1,0 +1,84 @@
+name: auto commit
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+
+jobs:
+  add_commit:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # https://github.com/actions/setup-python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'poetry'
+
+      - name: run python
+        id: run_python
+        run: |
+          echo "run_script=$(python script_err.py)" >> $GITHUB_OUTPUT
+
+      - name: check python execution
+        if: steps.run_python.run_script.build_versions < '0'
+        run: |
+          core.setFailed('script ended with error')
+
+      - name: change readme
+        if: steps.run_python.run_script.build_versions == '0'
+        run: |
+          echo "abc" >> ./README.md
+          echo "Last updated by bot: 2022-08-26" >> ./README.md 
+          echo "789" >> ./LICENSE
+
+      - name: Add & Commit
+        if: steps.run_python.run_script.build_versions == '0'
+        id: endbug-auto-commit
+        uses: EndBug/add-and-commit@v9.1.1
+        with:
+          add: 'README.md LICENSE'
+          author_name: Gabriele Pongelli
+          author_email: gpongelli@users.noreply.github.com
+      - name: "EndBug Run if changes have been detected"
+        if: steps.endbug-auto-commit.outputs.committed == 'true'
+        run: echo "ENDBUG - Changes!"
+      - name: "EndBug Run if no changes have been detected"
+        if: steps.endbug-auto-commit.outputs.committed == 'false'
+        run: echo "ENDBUG -No Changes!"
+
+      # changes for other action
+      - name: change readme AGAIN
+        if: steps.run_python.run_script.build_versions == '0'
+        run: |
+          sed -i -E "s/Last updated by bot: .*/Last updated by bot: $(date +%Y-%m-%d)/" README.md
+          echo "second action" >> ./LICENSE
+
+      # alternative action
+      - name: Git Auto Commit
+        if: steps.run_python.run_script.build_versions == '0'
+        id: auto-commit-action
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          file_pattern: 'README.md LICENSE'
+          commit_user_name: Gabriele Pongelli  # My GitHub Actions Bot # defaults to "github-actions[bot]"
+          commit_user_email: gpongelli@users.noreply.github.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
+          # commit_author: Gabriele Pongelli <gpongelli@users.noreply.github.com> # defaults to author of the commit that triggered the run
+      - name: "Second action - Run if changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: echo "Second action - Changes!"
+      - name: "Second action - Run if no changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: echo "Second action - No Changes!"
