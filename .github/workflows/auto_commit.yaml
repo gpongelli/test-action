@@ -21,10 +21,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: change readme
-        run: |
-          echo "123" > ./README.md
-          echo "456" > ./LICENSE
+      #- name: change readme
+      #  run: |
+      #    echo "123" > ./README.md
+      #    echo "456" > ./LICENSE
 
       - name: Add & Commit
         uses: EndBug/add-and-commit@v9.1.1
