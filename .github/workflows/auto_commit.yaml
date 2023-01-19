@@ -27,11 +27,18 @@ jobs:
           echo "789" >> ./LICENSE
 
       - name: Add & Commit
+        id: endbug-auto-commit
         uses: EndBug/add-and-commit@v9.1.1
         with:
           add: 'README.md LICENSE'
           author_name: Gabriele Pongelli
           author_email: gpongelli@users.noreply.github.com
+      - name: "EndBug Run if changes have been detected"
+        if: steps.endbug-auto-commit.outputs.committed == 'true'
+        run: echo "ENDBUG - Changes!"
+      - name: "EndBug Run if no changes have been detected"
+        if: steps.endbug-auto-commit.outputs.committed == 'false'
+        run: echo "ENDBUG -No Changes!"
 
       # changes for other action
       - name: change readme AGAIN
@@ -48,9 +55,9 @@ jobs:
           commit_user_name: Gabriele Pongelli  # My GitHub Actions Bot # defaults to "github-actions[bot]"
           commit_user_email: gpongelli@users.noreply.github.com # defaults to "41898282+github-actions[bot]@users.noreply.github.com"
           # commit_author: Gabriele Pongelli <gpongelli@users.noreply.github.com> # defaults to author of the commit that triggered the run
-      - name: "Run if changes have been detected"
+      - name: "Second action - Run if changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
-        run: echo "Changes!"
-      - name: "Run if no changes have been detected"
+        run: echo "Second action - Changes!"
+      - name: "Second action - Run if no changes have been detected"
         if: steps.auto-commit-action.outputs.changes_detected == 'false'
-        run: echo "No Changes!"
+        run: echo "Second action - No Changes!"
