@@ -24,6 +24,7 @@ jobs:
       - name: change readme
         run: |
           echo "abc" >> ./README.md
+          echo "Last updated by bot: 2022-08-26" >> ./README.md 
           echo "789" >> ./LICENSE
 
       - name: Add & Commit
@@ -43,7 +44,7 @@ jobs:
       # changes for other action
       - name: change readme AGAIN
         run: |
-          echo "second action" >> ./README.md
+          sed -i -E "s/Last updated by bot: .*/Last updated by bot: $(date +%Y-%m-%d)/" README.md
           echo "second action" >> ./LICENSE
 
       # alternative action
