@@ -5,6 +5,8 @@
 [tool.poetry]
     name = "prova"
     version = "0.0.0"
+    description = 'prova'
+    authors = ['gpongelli']
     license =  "MIT"
 
     classifiers=[
