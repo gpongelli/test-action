@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2023 Gabriele Pongelli
+#
+# SPDX-License-Identifier: MIT
+
+[tool.poetry]
+    name = "prova"
+    version = "0.0.0"
+    license =  "MIT"
+
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+    ]
+
+    [tool.poetry.dependencies]
+        python = ">=3.8.0,<4.0"
+
+    [tool.poetry.group.devel]
+        optional = true
+        [tool.poetry.group.devel.dependencies]
+            pip  = "^22.3.1"
+
+
+[build-system]
+    requires = ["setuptools", "poetry-core>=1.0.0"]
+    build-backend = "poetry.core.masonry.api"
