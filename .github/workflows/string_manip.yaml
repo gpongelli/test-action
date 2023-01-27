@@ -45,6 +45,7 @@ jobs:
 
   wait_matrix:
     needs: [make_output]
+    runs-on: ubuntu-latest
     steps:
       - name: print
         run: |
