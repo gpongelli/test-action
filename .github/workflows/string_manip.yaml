@@ -41,4 +41,4 @@ jobs:
 
       - name: print variable
         run: |
-          echo ${{ var.outputs.py_ver }}
+          echo ${{ steps.var.outputs.py_ver }}
