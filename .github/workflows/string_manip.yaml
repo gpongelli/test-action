@@ -42,3 +42,10 @@ jobs:
       - name: print variable
         run: |
           echo ${{ steps.var.outputs.py_ver }}
+
+  wait_matrix:
+    needs: [make_output]
+    steps:
+      - name: print
+        run: |
+          echo "HELLO"
