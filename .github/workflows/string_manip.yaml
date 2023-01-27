@@ -42,7 +42,7 @@ jobs:
   use_output:
     needs: [make_output]
     runs-on: [ubuntu-latest]
-    step:
+    steps:
       - name: print variable
         run: |
           echo ${{ needs.make_output.outputs.py_ver }}
