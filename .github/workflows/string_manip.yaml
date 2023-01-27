@@ -39,10 +39,6 @@ jobs:
           script: |
             core.setOutput('py_ver', 'cp' + '${{ matrix.python-version }}'.replaceAll(/[/.]/g, '').trim('-') + '-*');
 
-  use_output:
-    needs: [make_output]
-    runs-on: [ubuntu-latest]
-    steps:
       - name: print variable
         run: |
-          echo ${{ needs.make_output.outputs.py_ver }}
+          echo ${{ var.outputs.py_ver }}
