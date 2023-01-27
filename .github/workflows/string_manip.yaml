@@ -1,0 +1,48 @@
+name: string manipulation
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  make_output:
+    # The type of runner that the job will run on
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+        poetry-version: ["1.2", "1.3"]
+        os: [ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+
+    outputs:
+      py_ver: ""
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # https://github.com/actions/setup-python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # https://github.com/actions/setup-python/blob/main/docs/advanced-usage.md#caching-packages
+      #- name: Install Poetry
+      #  run: pipx install poetry==${{ matrix.poetry-version }}
+      - name: Setting global variables
+        uses: actions/github-script@v6
+        id: var
+        with:
+          script: |
+            core.setOutput('py_ver', 'cp' + '${{ matrix.python-version }}'.replaceAll(/[/.]/g, '').trim('-') + '-*');
+
+  use_output:
+    needs: [make_output]
+    runs-on: [ubuntu-latest]
+    step:
+      - name: print variable
+        run: |
+          echo ${{ needs.make_output.outputs.py_ver }}
