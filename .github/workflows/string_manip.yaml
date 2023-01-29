@@ -18,7 +18,6 @@ jobs:
 
     outputs:
       py_ver: ""
-      run_date: ""
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,12 +38,17 @@ jobs:
         with:
           script: |
             core.setOutput('py_ver', 'cp' + '${{ matrix.python-version }}'.replaceAll(/[/.]/g, '').trim('-') + '-*');
-            core.setOutput('run_date', $(date +'%Y-%m-%d') );
+
+      - name: Get Date
+        id: date
+        uses: nanzm/get-time-action@v1.1
+        with:
+          format: 'YYYY-MM-DD'
 
       - name: print variable
         run: |
           echo ${{ steps.var.outputs.py_ver }}
-          echo ${{ steps.var.outputs.run_date }}
+          echo ${{ steps.date.outputs.time }}
 
   wait_matrix:
     needs: [make_output]
