@@ -40,15 +40,15 @@ jobs:
             core.setOutput('py_ver', 'cp' + '${{ matrix.python-version }}'.replaceAll(/[/.]/g, '').trim('-') + '-*');
 
       - name: Get Date
-        id: date
-        uses: nanzm/get-time-action@v1.1
+        id: t1
+        uses: Kaven-Universe/github-action-current-date-time@v1
         with:
-          format: 'YYYY-MM-DD'
+          format: "YYYY_MM_DD"
 
       - name: print variable
         run: |
           echo ${{ steps.var.outputs.py_ver }}
-          echo ${{ steps.date.outputs.time }}
+          echo ${{ steps.t1.outputs.year }}-${{ steps.t1.outputs.month }}-${{ steps.t1.outputs.day }}
 
   wait_matrix:
     needs: [make_output]
