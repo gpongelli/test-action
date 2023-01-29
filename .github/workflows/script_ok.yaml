@@ -45,6 +45,12 @@ jobs:
           echo "Last updated by bot: 2022-08-26" >> ./README.md 
           echo "789" >> ./LICENSE
 
+      - name: Get Date
+        id: get_date
+        uses: Kaven-Universe/github-action-current-date-time@v1
+        with:
+          format: "YYYY_MM_DD"
+
       - name: Add & Commit
         if: steps.run_python.outputs.run_script == 0
         id: endbug-auto-commit
@@ -53,6 +59,7 @@ jobs:
           add: 'README.md LICENSE'
           author_name: Gabriele Pongelli
           author_email: gpongelli@users.noreply.github.com
+          message: '[ci skip] execution on ' + ${{ steps.get_date.outputs.year }}-${{ steps.get_date.outputs.month }}-${{ steps.get_date.outputs.day }}
       - name: "EndBug Run if changes have been detected"
         if: steps.endbug-auto-commit.outputs.committed == 'true'
         run: echo "ENDBUG - Changes!"
