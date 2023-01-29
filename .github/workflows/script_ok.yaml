@@ -59,7 +59,7 @@ jobs:
           add: 'README.md LICENSE'
           author_name: Gabriele Pongelli
           author_email: gpongelli@users.noreply.github.com
-          message: '[ci skip] execution on ' + ${{ steps.get_date.outputs.year }}-${{ steps.get_date.outputs.month }}-${{ steps.get_date.outputs.day }}
+
       - name: "EndBug Run if changes have been detected"
         if: steps.endbug-auto-commit.outputs.committed == 'true'
         run: echo "ENDBUG - Changes!"
