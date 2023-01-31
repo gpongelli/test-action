@@ -48,7 +48,7 @@ jobs:
           shell: bash
           commands: |
             test `uname -m` = ${{ matrix.arch }}
-            cwd
+            pwd
             ls
             mkdir -p dist
             ${pythonLocation}/bin/python3 --version
