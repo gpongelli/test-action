@@ -29,6 +29,7 @@ jobs:
           cpu: ${{ matrix.cpu }}
           commands: |
               test `uname -m` = ${{ matrix.arch }}
+              mkdir -p dist
               echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
