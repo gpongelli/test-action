@@ -56,15 +56,15 @@ jobs:
           echo world > subfolder/world.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} txt_files
+          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} txt_files
           path: subfolder/*.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} md_files
+          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} md_files
           path: subfolder/*.md
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} all
+          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} all
           path: subfolder/*
 
   wait_matrix:
