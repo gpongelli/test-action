@@ -12,6 +12,12 @@ import logging
 
 
 if __name__ == '__main__':
+    logging.basicConfig(
+        level='INFO',
+        format='%(asctime)s [%(levelname)s - %(filename)s:%(lineno)d]    %(message)s',
+        handlers=None,
+    )
+
     _links = {}
     with open('python_links.json', mode='r') as fp:
         _links = json.load(fp)
