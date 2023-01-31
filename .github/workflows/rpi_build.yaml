@@ -53,9 +53,9 @@ jobs:
             ls
             mkdir -p dist
             python3 --version
-            sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev
             python3 script_ok.py
-            sudo apt install -y python3-pip
+            sudo apt update
+            sudo apt install -y python3-pip build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev
             python3 -m pip install wget
             python3 build_python_rpi.py
             echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
