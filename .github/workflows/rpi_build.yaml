@@ -56,6 +56,9 @@ jobs:
             python3 script_ok.py
             sudo apt update
             sudo apt install -y python3-pip build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev
+            pip --version
+            python3 -m pip install --upgrade pip
+            pip --version
             python3 -m pip install wget
             python3 build_python_rpi.py
             echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
