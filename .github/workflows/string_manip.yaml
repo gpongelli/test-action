@@ -50,6 +50,23 @@ jobs:
           echo ${{ steps.var.outputs.py_ver }}
           echo ${{ steps.t1.outputs.year }}-${{ steps.t1.outputs.month }}-${{ steps.t1.outputs.day }}
 
+      - run: mkdir -p subfolder
+      - run: |
+          echo hello > subfolder/hello.md
+          echo world > subfolder/world.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} txt_files
+          path: subfolder/*.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} md_files
+          path: subfolder/*.md
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }} py${{ matrix.python-versions }} ${{ matrix.poetry-versions }} all
+          path: subfolder/*
+
   wait_matrix:
     needs: [make_output]
     runs-on: ubuntu-latest
@@ -57,3 +74,15 @@ jobs:
       - name: print
         run: |
           echo "HELLO"
+
+  download_txt:
+    needs: [wait_matrix]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          path: down_folder
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: ./down_folder
