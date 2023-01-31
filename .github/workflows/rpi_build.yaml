@@ -47,11 +47,12 @@ jobs:
           cpu: ${{ matrix.cpu }}
           shell: bash
           commands: |
-              test `uname -m` = ${{ matrix.arch }}
-              ls ${pythonLocation}
-              mkdir -p dist
-              ${pythonLocation}/bin/python3 --version
-              echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
+            test `uname -m` = ${{ matrix.arch }}
+            cwd
+            ls
+            mkdir -p dist
+            ${pythonLocation}/bin/python3 --version
+            echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
 
