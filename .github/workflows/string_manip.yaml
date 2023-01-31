@@ -52,20 +52,21 @@ jobs:
 
       - run: mkdir -p subfolder
       - run: |
-          echo hello > subfolder/hello.md
-          echo world > subfolder/world.txt
+          echo hello > subfolder/hello_${{ matrix.os }}_py${{ matrix.python-version }}_${{ matrix.poetry-version }}.md
+          echo world > subfolder/world_${{ matrix.os }}_py${{ matrix.python-version }}_${{ matrix.poetry-version }}.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} txt_files
+          name: built_artifacts
+          #name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} txt_files
           path: subfolder/*.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} md_files
-          path: subfolder/*.md
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} all
-          path: subfolder/*
+      #- uses: actions/upload-artifact@v3
+      #  with:
+      #    #name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} md_files
+      #    path: subfolder/*.md
+      #- uses: actions/upload-artifact@v3
+      #  with:
+      #    #name: ${{ matrix.os }} py${{ matrix.python-version }} ${{ matrix.poetry-version }} all
+      #    path: subfolder/*
 
   wait_matrix:
     needs: [make_output]
