@@ -40,3 +40,8 @@ jobs:
         run: |
           poetry --version
           poetry --help
+
+      - name: print last array element
+        run: |
+          echo ${{ matrix.poetry-version[-1] }}
+          echo ${{ matrix.python-version[-1] }}
