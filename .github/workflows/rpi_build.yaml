@@ -45,10 +45,12 @@ jobs:
         with:
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
+          shell: bash
           commands: |
               test `uname -m` = ${{ matrix.arch }}
+              ls ${pythonLocation}
               mkdir -p dist
-              python3 --version
+              ${pythonLocation}/bin/python3 --version
               echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
