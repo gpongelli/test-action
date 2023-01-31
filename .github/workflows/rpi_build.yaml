@@ -25,21 +25,22 @@ jobs:
       - uses: actions/checkout@v3
 
       # python side
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2
-        with:
-          poetry-version: "1.3"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: all
+      # all useless, not visible into arm runner
+#      - uses: actions/setup-python@v4
+#        with:
+#          python-version: "3.11"
+#      - name: Setup Poetry
+#        uses: abatilo/actions-poetry@v2
+#        with:
+#          poetry-version: "1.3"
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#      - name: Set up QEMU
+#        if: runner.os == 'Linux'
+#        uses: docker/setup-qemu-action@v2
+#        with:
+#          platforms: all
 
       - uses: pguyot/arm-runner-action@v2
         with:
@@ -54,6 +55,8 @@ jobs:
             python3 --version
             python3 script_ok.py
             echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
+            apt update
+            apt search python3
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
 
