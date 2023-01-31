@@ -51,7 +51,8 @@ jobs:
             pwd
             ls
             mkdir -p dist
-            ${pythonLocation}/bin/python3 --version
+            python3 --version
+            python3 script_ok.py
             echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
