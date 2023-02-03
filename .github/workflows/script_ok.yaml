@@ -18,6 +18,7 @@ jobs:
 
     outputs:
       cmt_msg: ""
+      push_msg: ""
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -60,6 +61,7 @@ jobs:
         with:
           script: |
             core.setOutput('cmt_msg', '[ci skip] Cron execution on ${{ steps.get_date.outputs.year }}-${{ steps.get_date.outputs.month }}-${{ steps.get_date.outputs.day }}');
+            core.setOutput('push_msg', 'origin ' + ${{ github.ref_name }} + ' --force');
 
       - name: Add & Commit
         if: steps.run_python.outputs.run_script == 0
@@ -70,6 +72,7 @@ jobs:
           author_name: Gabriele Pongelli
           author_email: gpongelli@users.noreply.github.com
           message: ${{ steps.set_cmt_message.outputs.cmt_msg }}
+          push: ${{ steps.set_cmt_message.outputs.push_msg }}
 
       - name: "EndBug Run if changes have been detected"
         if: steps.endbug-auto-commit.outputs.committed == 'true'
