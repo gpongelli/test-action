@@ -61,7 +61,7 @@ jobs:
         with:
           script: |
             core.setOutput('cmt_msg', '[ci skip] Cron execution on ${{ steps.get_date.outputs.year }}-${{ steps.get_date.outputs.month }}-${{ steps.get_date.outputs.day }}');
-            core.setOutput('push_msg', 'origin ' + ${{ github.ref_name }} + ' --force');
+            core.setOutput('push_msg', 'origin ${{ github.ref_name }} --force');
 
       - name: Add & Commit
         if: steps.run_python.outputs.run_script == 0
