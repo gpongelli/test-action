@@ -75,15 +75,14 @@ jobs:
             tar xvf Python-${{ matrix.python-sw }}.tar.xz > /dev/null 2>&1
             cd Python-${{ matrix.python-sw }}
             ./configure --enable-shared --enable-optimizations --disable-test-modules
-            make altinstall
+            make -j 4 altinstall
             tree -Capug /opt/build_python
-            echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
 
       # DA ALTRO JOB
-      - uses: actions/upload-artifact@v3
-        name: Upload wheel
-        with:
-          name: built_artifacts
-          path: ./wheelhouse/*
+#      - uses: actions/upload-artifact@v3
+#        name: Upload wheel
+#        with:
+#          name: built_artifacts
+#          path: ./wheelhouse/*
