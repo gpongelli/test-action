@@ -7,20 +7,25 @@ on:
 
 jobs:
   build:
+    name: Build on ${{ matrix.arch }} - py${{ matrix.python-sw }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        python-sw: ["3.11.1"]
         arch: [armv6l, armv7l, aarch64]
         include:
         - arch: armv6l
           cpu: arm1176
           base_image: raspios_lite:latest
+          cpu_info: raspberrypi_zero_w
         - arch: armv7l
           cpu: cortex-a7
           base_image: raspios_lite:latest
+          cpu_info: raspberrypi_3b
         - arch: aarch64
           cpu: cortex-a53
           base_image: raspios_lite_arm64:latest
+          cpu_info: raspberrypi_zero2_w_arm64_w
     steps:
       - uses: actions/checkout@v3
 
@@ -46,6 +51,7 @@ jobs:
         with:
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
+          cpu_info: ${{ matrix.cpu_info }}
           shell: bash
           commands: |
             test `uname -m` = ${{ matrix.arch }}
@@ -53,14 +59,16 @@ jobs:
             ls
             mkdir -p dist
             python3 --version
-            python3 script_ok.py
             sudo apt update
-            sudo apt install -y python3-pip build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev
-            pip --version
-            python3 -m pip install --upgrade pip
-            pip --version
-            python3 -m pip install wget
-            python3 build_python_rpi.py
+            sudo apt install -y python3-pip build-essential zlib1g-dev tree libncurses5-dev libgdbm-dev libnss3-dev wget automake autoconf libtool libffi-dev
+            mkdir -p /opt/build_python
+            cd /opt/build_python
+            wget https://www.python.org/ftp/python/${{ matrix.python-sw }}/Python-${{ matrix.python-sw }}.tar.xz > /dev/null 2>&1
+            tar xvf Python-${{ matrix.python-sw }}.tar.xz > /dev/null 2>&1
+            cd Python-${{ matrix.python-sw }}
+            ./configure --enable-shared --enable-optimizations --disable-test-modules
+            make altinstall
+            tree -Capug /opt/build_python
             echo "PROVA" > ./dist/hello_${{ matrix.arch }}.txt
           copy_artifact_path: ./dist
           copy_artifact_dest: ./wheelhouse
