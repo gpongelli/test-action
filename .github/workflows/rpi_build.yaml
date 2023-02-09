@@ -5,9 +5,16 @@ on:
       - 'main'
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+
 jobs:
   build:
-    name: Build on ${{ matrix.arch }} - py${{ matrix.python-sw }}
+    name: 🏗️ Build on ${{ matrix.arch }} - py${{ matrix.python-sw }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -54,21 +61,45 @@ jobs:
 #        with:
 #          platforms: all
 
-      - uses: pguyot/arm-runner-action@v2
+      - name: Define the image name
+        id: image_and_branch_name
+        run: |
+          if [ ${GITHUB_REF/refs\/tags\//} != ${GITHUB_REF} ]; then
+            echo "LOCAL_BRANCH=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+            echo "RELEASE_NAME=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/tags\//}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+          elif [ ${GITHUB_REF/refs\/heads\//} != "${GITHUB_REF}" ]; then
+            echo "LOCAL_BRANCH=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_OUTPUT
+            echo "RELEASE_NAME=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/heads\//}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+          else
+            echo "LOCAL_BRANCH=${GITHUB_REF}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF//\//-}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create release image
+        uses: pguyot/arm-runner-action@v2
+        id: arm_runner_install
         with:
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
           cpu_info: ${{ matrix.cpu_info }}
           shell: bash
-          image_additional_mb: 2048
+          copy_repository_path: /opt/repo
+          image_additional_mb: 4096
           commands: |
             test `uname -m` = ${{ matrix.arch }}
+            # Disable IPv6 in case it is configured but does not work
+            ping6 -c 1 www.ietf.org || sudo sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
+            sudo useradd pi || true
+            sudo sh -c "[ ! -f /etc/sudoers.d/010_pi-nopasswd ] && usermod -aG sudo pi && echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/010_pi-nopasswd || true"
+            sudo chown -hR pi:pi /opt/repo
             pwd
             ls
             mkdir -p dist
             python3 --version
             sudo apt update
-            sudo apt install -y python3-pip build-essential gcc zlib1g-dev tree libncurses5-dev libgdbm-dev libnss3-dev wget automake autoconf libtool libffi-dev openssl bison byacc cscope universal-ctags cvs diffstat doxygen flex gcc gettext git indent intltool libtool patch patchutils rcs swig systemtap
+            sudo apt install -y --no-install-recommends autoconf automake bison byacc build-essential cscope diffstat flex gcc gettext git indent intltool libasound2-dev libatlas-base-dev libffi-dev libgdbm-dev libgfortran5 liblapack-dev libmpg123-dev libncurses5-dev libnss3-dev libopenblas-dev libssl-dev libtool openssl patch patchutils rcs swig systemtap tree universal-ctags wget xz-utils zlib1g-dev zram-tools
             mkdir -p /opt/build_python/installed
             cd /opt/build_python
             wget https://www.python.org/ftp/python/${{ matrix.python-sw }}/Python-${{ matrix.python-sw }}.tar.xz > /dev/null 2>&1
@@ -76,9 +107,38 @@ jobs:
             cd Python-${{ matrix.python-sw }}
             ./configure --enable-shared --disable-test-modules --prefix=/opt/build_python/installed
             make -j 8 altinstall
-            tree -Capug /opt/build_python
-          copy_artifact_path: ./dist
-          copy_artifact_dest: ./wheelhouse
+            tree -Capug /opt/build_python/installed
+            echo 'PATH=/opt/build_python/installed/bin:$PATH' >> /home/pi/.bashrc
+            echo 'LD_LIBRARY_PATH=/opt/build_python/installed/lib:$LD_LIBRARY_PATH' >> /home/pi/.bashrc
+            sudo echo 'PATH=/opt/build_python/installed/bin:$PATH' >> /root/.bashrc
+            sudo echo 'LD_LIBRARY_PATH=/opt/build_python/installed/lib:$LD_LIBRARY_PATH' >> /root/.bashrc
+            sudo apt-get autoremove --purge -y
+            sudo apt-get clean
+
+      - name: Compress the release image
+        run: |
+          mv ${{ steps.arm_runner_install.outputs.image }} ${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
+          sudo xz -T 0 -v ${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img
+      - name: Upload the image artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
+          path: ${{ steps.image_and_branch_name.outputs.IMAGE_NAME_SUFFIX }}.img.xz
+          if-no-files-found: error
+          retention-days: 1
+
+      # https://github.com/softprops/action-gh-release
+      - name: create github release
+        if: startsWith(github.ref, 'refs/tags/')
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.make_gh_release_token }}
+          name: ${{ steps.image_and_branch_name.outputs.RELEASE_NAME }}
+          body: RPI ${{ matrix.arch }} image with Python ${{ matrix.python-sw }}
+          files: ${{ steps.image_and_branch_name.outputs.RELEASE_NAME }}-*.img.xz/${{ steps.image_and_branch_name.outputs.RELEASE_NAME }}-*.img.xz
+          draft: false
+          prerelease: false
 
       # DA ALTRO JOB
 #      - uses: actions/upload-artifact@v3
