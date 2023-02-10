@@ -2,7 +2,7 @@ name: Test architecture matrix
 on:
   push:
     branches:
-      - 'main'
+      - 'rpi_build'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -67,14 +67,14 @@ jobs:
           if [ ${GITHUB_REF/refs\/tags\//} != ${GITHUB_REF} ]; then
             echo "LOCAL_BRANCH=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
-            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/tags\//}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/tags\//}-${{ matrix.arch }}" >> $GITHUB_OUTPUT
           elif [ ${GITHUB_REF/refs\/heads\//} != "${GITHUB_REF}" ]; then
             echo "LOCAL_BRANCH=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=${GITHUB_REF/refs\/heads\//}" >> $GITHUB_OUTPUT
-            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/heads\//}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF/refs\/heads\//}-${{ matrix.arch }}" >> $GITHUB_OUTPUT
           else
             echo "LOCAL_BRANCH=${GITHUB_REF}" >> $GITHUB_OUTPUT
-            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF//\//-}-${{ matrix.target }}" >> $GITHUB_OUTPUT
+            echo "IMAGE_NAME_SUFFIX=${GITHUB_REF//\//-}-${{ matrix.arch }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Create release image
