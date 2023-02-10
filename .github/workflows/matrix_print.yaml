@@ -78,3 +78,4 @@ jobs:
           echo ${{ matrix.python-sw }}
           echo ${{ matrix.base_image }}
           echo $ARM_TAG
+          echo ${{ matrix.arm_tag }}
