@@ -29,10 +29,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: bhowell2/github-substring-action@v1.0.0
+        id: sha_seven
+        with:
+          value: ${GITHUB_SHA}
+          length_from_start: 7
+            -
       - name: print sha
         run: |
           echo ${GITHUB_SHA}
-          echo ${GITHUB_SHA[:7]}
+          echo ${{ steps.sha_seven.outputs.substring }}
 
       - name: Use release image
         uses: pguyot/arm-runner-action@v2
