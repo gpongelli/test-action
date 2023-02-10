@@ -29,12 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: bhowell2/github-substring-action@1.0.1
-        id: sha_seven
-        with:
-          value: ${{ github.sha }}
-          length_from_start: 7
-          output_name: short_sha
       - id: get_short_sha
         uses: actions/github-script@0.9.0
         with:
@@ -64,4 +58,7 @@ jobs:
             ls -l /opt/build_python/installed/bin
             ls -l /opt/build_python/installed/lib
             python3 --version
+            ls -l $(which python3)
             /opt/build_python/installed/bin/python3.9 --version
+            sudo update-alternatives --install /usr/bin/python3 python3 /opt/build_python/installed/bin/python3.9 100
+            /usr/bin/python3 --version
