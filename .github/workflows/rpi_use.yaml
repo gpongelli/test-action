@@ -66,7 +66,6 @@ jobs:
             echo $PATH
             echo $LD_LIBRARY_PATH
             python3 --version
-            mkdir /opt/repo/dist
             python3 --version >> /opt/repo/dist/ver.txt 
 
 
