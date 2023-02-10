@@ -1,4 +1,4 @@
-name: Test architecture matrix
+name: Use built image
 on:
   push:
     branches:
@@ -25,7 +25,7 @@ jobs:
         - arch: armv6l
           cpu: arm1176
           # base_image: raspios_lite:latest
-          base_image: https://github.com/gpongelli/arm-runner-python/suites/10884120736/artifacts/549513936
+          base_image: https://github.com/gpongelli/test-action/releases/download/1.0/main-.img.xz
     steps:
       - uses: actions/checkout@v3
 
