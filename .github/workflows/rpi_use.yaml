@@ -39,7 +39,7 @@ jobs:
         uses: actions/github-script@0.9.0
         with:
           script: |
-            const short_sha = github.sha.substr(0, 7)
+            const short_sha = '${{ github.sha }}'.substr(0, 7)
             core.setOutput('short_sha', short_sha)
 
       - name: print sha
