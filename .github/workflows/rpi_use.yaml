@@ -18,14 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-sw: ["3.9.16"]
-        arch: [armv6l]
+        python-sw: ["3.11.1"]
+        arch: [armv7l]
         include:
 # arm1176 is the CPU of BCM2835 which is the SOC of first generation RaspberryPi and RaspberryPi Zero.
-        - arch: armv6l
-          cpu: arm1176
+        - arch: armv7l
+          cpu: cortex-a7
           # base_image: raspios_lite:latest
-          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.0.0/1.0.0-armv6l-py39.img.xz
+          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.0.0/1.0.0-armv7l-py311.img.xz
     steps:
       - uses: actions/checkout@v3
 
