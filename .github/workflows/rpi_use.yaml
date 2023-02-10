@@ -40,9 +40,11 @@ jobs:
           copy_repository_path: /opt/repo
           image_additional_mb: 4096
           commands: |
+            whoami
+            cat $HOME/.bashrc
             echo $PATH
             echo $LD_LIBRARY_PATH
             ls -l /opt/build_python/installed/bin
             ls -l /opt/build_python/installed/lib
             python3 --version
-            /opt/build_python/installed/bin/python3 --version
+            /opt/build_python/installed/bin/python3.9 --version
