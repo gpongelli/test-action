@@ -29,16 +29,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: bhowell2/github-substring-action@v1.0.0
+      - uses: bhowell2/github-substring-action@v1.0.1
         id: sha_seven
         with:
-          value: ${GITHUB_SHA}
+          value: ${{ github.sha }}
           length_from_start: 7
-            -
+          output_name: short_sha
+
       - name: print sha
         run: |
           echo ${GITHUB_SHA}
-          echo ${{ steps.sha_seven.outputs.substring }}
+          echo ${{ steps.sha_seven.outputs.short_sha }}
 
       - name: Use release image
         uses: pguyot/arm-runner-action@v2
@@ -52,7 +53,6 @@ jobs:
           image_additional_mb: 4096
           commands: |
             whoami
-            cat $HOME/.bashrc
             echo $PATH
             echo $LD_LIBRARY_PATH
             ls -l /opt/build_python/installed/bin
