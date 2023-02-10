@@ -29,6 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: print sha
+        run: |
+          echo ${GITHUB_SHA}
+          echo ${GITHUB_SHA[:7]}
+
       - name: Use release image
         uses: pguyot/arm-runner-action@v2
         id: arm_runner_install
