@@ -60,7 +60,5 @@ jobs:
             ls -l $(which python3)
             ls -l /usr/lib
             ls -l /usr/local/lib
-            export LD_LIBRARY_PATH=/opt/build_python/installed/lib
-            /opt/build_python/installed/bin/python3.11 --version
             sudo update-alternatives --install /usr/bin/python3 python3 /opt/build_python/installed/bin/python3.11 100
             /usr/bin/python3 --version
