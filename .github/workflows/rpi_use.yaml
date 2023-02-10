@@ -35,11 +35,17 @@ jobs:
           value: ${{ github.sha }}
           length_from_start: 7
           output_name: short_sha
+      - id: get_short_sha
+        uses: actions/github-script@0.9.0
+        with:
+          script: |
+            const short_sha = github.sha.substr(0, 7)
+            core.setOutput('short_sha', short_sha)
 
       - name: print sha
         run: |
           echo ${GITHUB_SHA}
-          echo ${{ steps.sha_seven.outputs.short_sha }}
+          echo ${{ steps.get_short_sha.outputs.short_sha }}
 
       - name: Use release image
         uses: pguyot/arm-runner-action@v2
