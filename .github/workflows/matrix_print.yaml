@@ -3,6 +3,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  ARM_TAG: 1.0.0
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
@@ -23,40 +26,49 @@ jobs:
           python-sw: "3.11.1"
           cpu: arm1176
           base_image: arm6-py311
+          arm_tag: abc-$ARM_TAG-def
         - arch: armv6l
           python-sw: "3.10.9"
           cpu: arm1176
           base_image: arm6-py310
+          arm_tag: abc-$ARM_TAG-def
         - arch: armv6l
           python-sw: "3.9.16"
           cpu: arm1176
           base_image: arm6-py39
+          arm_tag: abc-$ARM_TAG-def
 
         - arch: armv7l
           python-sw: "3.11.1"
           cpu: cortex-a7
           base_image: arm7-py311
+          arm_tag: abc-$ARM_TAG-def
         - arch: armv7l
           python-sw: "3.10.9"
           cpu: cortex-a7
           base_image: arm7-py310
+          arm_tag: abc-$ARM_TAG-def
         - arch: armv7l
           python-sw: "3.9.16"
           cpu: cortex-a7
           base_image: arm7-py39
+          arm_tag: abc-$ARM_TAG-def
 
         - arch: aarch64
           python-sw: "3.11.1"
           cpu: cortex-a53
           base_image: aarch64-py311
+          arm_tag: abc-$ARM_TAG-def
         - arch: aarch64
           python-sw: "3.10.9"
           cpu: cortex-a53
           base_image: aarch64-py310
+          arm_tag: abc-$ARM_TAG-def
         - arch: aarch64
           python-sw: "3.9.16"
           cpu: cortex-a53
           base_image: aarch64-py39
+          arm_tag: abc-$ARM_TAG-def
 
     steps:
       - name: print vars
@@ -65,3 +77,4 @@ jobs:
           echo ${{ matrix.cpu }}
           echo ${{ matrix.python-sw }}
           echo ${{ matrix.base_image }}
+          echo $ARM_TAG
