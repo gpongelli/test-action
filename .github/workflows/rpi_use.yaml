@@ -25,7 +25,7 @@ jobs:
         - arch: armv7l
           cpu: cortex-a7
           # base_image: raspios_lite:latest
-          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.0.0/1.0.0-armv7l-py311.img.xz
+          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.1.0/1.1.0-armv7l-py311.img.xz
     steps:
       - uses: actions/checkout@v3
 
@@ -68,6 +68,7 @@ jobs:
             echo $LD_LIBRARY_PATH
             python3 --version
             python3 --version >> /opt/repo/dist/ver.txt 
+            /opt/build_python/installed/bin/pip3 config -v list 
 
 
       - name: show out files
