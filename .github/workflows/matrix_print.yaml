@@ -6,7 +6,7 @@ on:
 env:
   ARM_TAG: 1.0.0
   PY_311: "3.11.1"
-  CONC: "${{ env.ARM_TAG }} + ${{ env.PY_311 }}"
+  CONC: "${{ ARM_TAG }} + ${{ PY_311 }}"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
