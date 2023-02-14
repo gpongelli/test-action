@@ -61,6 +61,7 @@ jobs:
             ls -l $(which python3)
             cat /etc/profile.d/env.sh
             cat /etc/profile.d/rust.sh
+            [-f /etc/profile ] && cat /etc/profile
             ls -lR /opt/repo
             python3 --version
             rustc --version
