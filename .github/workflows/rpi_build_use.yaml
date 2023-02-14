@@ -1,0 +1,45 @@
+name: Build and run
+on:
+  push:
+  workflow_dispatch:
+
+
+env:
+  CARGO_PATH: "/opt/rust/cargo"
+  RUSTUP_PATH: "/opt/rust/rustup"
+  PYTHON_INSTALL_PATH: "/opt/build_python/installed/"
+  PIPX_BIN_PATH: "/opt/pipx_bin"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pguyot/arm-runner-action@v2
+      id: optimized
+      with:
+        base_image: raspios_lite:2021-05-07
+        optimize_image: yes
+        commands: |
+          mkdir -p $PYTHON_INSTALL_PATH $CARGO_PATH $RUSTUP_PATH 
+          echo "export PATH=$CARGO_PATH/bin:$PYTHON_INSTALL_PATH/bin:$PIPX_BIN_PATH:$PATH" >> /etc/profile.d/env.sh
+          echo "export LD_LIBRARY_PATH=$PYTHON_INSTALL_PATH/lib:$LD_LIBRARY_PATH" >> /etc/profile.d/env.sh
+          echo "[global]" >> /etc/pip.conf
+          echo "extra-index-url=https://www.piwheels.org/simple" >> /etc/pip.conf
+          cat $CARGO_HOME/env > /etc/profile.d/rust.sh
+
+  see_run:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: pguyot/arm-runner-action@v2
+        id: check
+        with:
+          base_image: ${{needs.build.outputs.imgsize}}
+          commands: |
+            whoami
+            echo $PATH
+            echo $LD_LIBRARY_PATH
+            cat /etc/profile.d/env.sh
+            cat /etc/profile.d/rust.sh
