@@ -25,7 +25,7 @@ jobs:
         - arch: armv7l
           cpu: cortex-a7
           # base_image: raspios_lite:latest
-          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.0b2/1.2.0b2-armv7l-py311.img.xz
+          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.1b0/1.2.1b0-armv7l-py311.img.xz
     steps:
       - uses: actions/checkout@v3
 
