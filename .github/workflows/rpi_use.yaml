@@ -59,12 +59,10 @@ jobs:
             ls -l /opt/build_python/installed/bin
             ls -l /opt/build_python/installed/lib
             ls -l $(which python3)
-            ls -l /usr/lib
-            ls -l /usr/local/lib
-            ls -lR /opt/rust
-            ls -lR /etc/profile.d
+            source /etc/profile.d/env.sh
+            source /etc/profile.d/rust.sh
             ls -lR /opt/repo
-            find / -iname rustc
+            rustc --version
             python3 --version
             python3 --version >> /opt/repo/dist/ver.txt 
             pip3 config -v list 
