@@ -34,7 +34,6 @@ jobs:
     needs: [the_build]
     steps:
     - uses: pguyot/arm-runner-action@v2
-        id: check
         with:
           base_image: ${{needs.build.outputs.imgsize}}
           commands: |
