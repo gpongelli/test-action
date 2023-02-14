@@ -27,7 +27,6 @@ jobs:
           echo "export LD_LIBRARY_PATH=$PYTHON_INSTALL_PATH/lib:$LD_LIBRARY_PATH" >> /etc/profile.d/env.sh
           echo "[global]" >> /etc/pip.conf
           echo "extra-index-url=https://www.piwheels.org/simple" >> /etc/pip.conf
-          cat $CARGO_HOME/env > /etc/profile.d/rust.sh
 
   see_run:
     runs-on: ubuntu-latest
@@ -41,4 +40,4 @@ jobs:
           echo $PATH
           echo $LD_LIBRARY_PATH
           cat /etc/profile.d/env.sh
-          cat /etc/profile.d/rust.sh
+          cat /etc/pip.conf
