@@ -62,6 +62,7 @@ jobs:
             ls -l /usr/lib
             ls -l /usr/local/lib
             ls -lR /opt/rust
+            ls -lR /etc/profile.d
             ls -lR /opt/repo
             find / -iname rustc
             python3 --version
