@@ -6,7 +6,6 @@ on:
 env:
   ARM_TAG: 1.0.0
   PY_311: "3.11.1"
-  CONC: "${{ ARM_TAG }} + ${{ PY_311 }}"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -81,4 +80,3 @@ jobs:
           echo ${{ matrix.base_image }}
           echo $ARM_TAG
           echo ${{ matrix.arm_tag }}
-          echo ${{ env.CONC }}
