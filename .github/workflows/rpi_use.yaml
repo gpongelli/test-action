@@ -61,8 +61,11 @@ jobs:
             ls -l $(which python3)
             cat /etc/profile.d/env.sh
             cat /etc/profile.d/rust.sh
-            [-f /etc/profile ] && cat /etc/profile
+            [ -f /etc/profile ] && cat /etc/profile
             ls -lR /opt/repo
+            for i in /etc/profile.d/*.sh; do . $i; done
+            echo $PATH
+            echo $LD_LIBRARY_PATH
             python3 --version
             rustc --version
             python3 --version >> /opt/repo/dist/ver.txt 
