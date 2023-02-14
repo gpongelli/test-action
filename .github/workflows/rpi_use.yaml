@@ -59,6 +59,8 @@ jobs:
             ls -l /opt/build_python/installed/bin
             ls -l /opt/build_python/installed/lib
             ls -l $(which python3)
+            cat /etc/profile.d/env.sh
+            cat /etc/profile.d/rust.sh
             source /etc/profile.d/env.sh
             source /etc/profile.d/rust.sh
             ls -lR /opt/repo
