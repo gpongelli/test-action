@@ -25,7 +25,7 @@ jobs:
         - arch: armv7l
           cpu: cortex-a7
           # base_image: raspios_lite:latest
-          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.1b0/1.2.1b0-armv7l-py311.img.xz
+          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.1b1/1.2.1b1-armv7l-py311.img.xz
     steps:
       - uses: actions/checkout@v3
 
@@ -61,16 +61,16 @@ jobs:
             ls -l $(which python3)
             cat /etc/profile.d/env.sh
             cat /etc/profile.d/rust.sh
-            source /etc/profile.d/env.sh
-            source /etc/profile.d/rust.sh
             ls -lR /opt/repo
-            export CARGO_HOME=/opt/rust/cargo
-            export RUSTUP_HOME=/opt/rust/rustup
-            rustc --version
             python3 --version
+            rustc --version
             python3 --version >> /opt/repo/dist/ver.txt 
             pip3 config -v list 
 
+#            cat /etc/profile.d/env.sh
+#            cat /etc/profile.d/rust.sh
+#            source /etc/profile.d/env.sh
+#            source /etc/profile.d/rust.sh
 
       - name: show out files
         run: |
