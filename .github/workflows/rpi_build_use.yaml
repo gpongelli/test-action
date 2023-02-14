@@ -34,11 +34,11 @@ jobs:
     needs: [the_build]
     steps:
     - uses: pguyot/arm-runner-action@v2
-        with:
-          base_image: ${{needs.build.outputs.imgsize}}
-          commands: |
-            whoami
-            echo $PATH
-            echo $LD_LIBRARY_PATH
-            cat /etc/profile.d/env.sh
-            cat /etc/profile.d/rust.sh
+      with:
+        base_image: ${{needs.build.outputs.imgsize}}
+        commands: |
+          whoami
+          echo $PATH
+          echo $LD_LIBRARY_PATH
+          cat /etc/profile.d/env.sh
+          cat /etc/profile.d/rust.sh
