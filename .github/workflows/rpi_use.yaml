@@ -52,6 +52,7 @@ jobs:
           copy_repository_path: /opt/repo
           copy_artifact_path: dist
           image_additional_mb: 4096
+          exit_on_fail: false
           commands: |
             whoami
             echo $PATH
