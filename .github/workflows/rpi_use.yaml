@@ -66,9 +66,10 @@ jobs:
             echo $LD_LIBRARY_PATH
             echo $CARGO_HOME
             echo $RUSTUP_HOME
-            find /opt -iname Cargo.toml
+            find / -iname Cargo.toml
             tree -apuC $CARGO_HOME
-            tree -apuC $RUSTUP_HOME
+            cargo init
+            find / -iname Cargo.toml
             python3 --version
             rustc --version
             python3 --version >> /opt/repo/dist/ver.txt 
