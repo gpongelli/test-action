@@ -79,8 +79,9 @@ jobs:
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
             export CARGO_LOG=trace
             cargo fetch
+            rm -rdf /opt/pipx/logs/*.log
             pipx install poetry
-            [ -f /opt/pipx/logs/*.log ] && cat $(find /opt/pipx/logs/*.log)
+            cat $(find /opt/pipx/logs/*.log)
             poetry add cryptography
 
 #            cat /etc/profile.d/env.sh
