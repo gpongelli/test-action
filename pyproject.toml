@@ -20,7 +20,7 @@
 
     [tool.poetry.dependencies]
         python = ">=3.8.0,<4.0"
-    wget = "^3.2"
+        wget = "^3.2"
 
     [tool.poetry.group.devel]
         optional = true
