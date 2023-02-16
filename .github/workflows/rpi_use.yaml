@@ -79,10 +79,14 @@ jobs:
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
             export CARGO_LOG=trace
             cargo fetch
+            mkdir -p /opt/poetry
+            ls -l /opt
+            export POETRY_HOME=/opt/poetry
+            python3 /opt/repo/install-poetry.py --version 1.3.0
+            $POETRY_HOME/bin/poetry --version
             rm -rdf /opt/pipx/logs/*.log
-            pipx install poetry
+            $POETRY_HOME/bin/poetry add cryptography
             cat $(find /opt/pipx/logs/*.log)
-            poetry add cryptography
 
 #            cat /etc/profile.d/env.sh
 #            cat /etc/profile.d/rust.sh
