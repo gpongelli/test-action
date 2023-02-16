@@ -63,16 +63,23 @@ jobs:
             cat /etc/profile.d/env.sh
             cat /etc/profile.d/rust.sh
             ls -lR /opt/repo
+            echo "---path---"
             echo $PATH
+            echo "---ld lib path---"
             echo $LD_LIBRARY_PATH
+            echo "---cargo home---"
             echo $CARGO_HOME
+            echo "---rustup home---"
             echo $RUSTUP_HOME
             find / -iname Cargo.toml
             tree -apuC $CARGO_HOME
             cargo init
             find / -iname Cargo.toml
+            find / -iname rustc
             python3 --version
             rustc --version
+            cargo --version
+            rustup update stable
             python3 --version >> /opt/repo/dist/ver.txt 
             pip3 config -v list
             python3 -m pip install --upgrade pip
