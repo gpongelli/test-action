@@ -74,6 +74,7 @@ jobs:
             echo $CARGO_HOME
             echo "---rustup home---"
             echo $RUSTUP_HOME
+            curl https://sh.rustup.rs -sSf | bash -s -- -y --no-modify-path
             find / -iname Cargo.toml
             tree -apuC $CARGO_HOME
             sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc
