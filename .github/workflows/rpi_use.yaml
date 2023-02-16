@@ -82,8 +82,10 @@ jobs:
             mkdir -p /opt/poetry
             ls -l /opt
             ls -lR /opt/repo
+            rm -rdf /opt/repo/poetry-*.log
             export POETRY_HOME=/opt/poetry
             python3 /opt/repo/test-action/install-poetry.py --version 1.3.0
+            cat $(find /opt/repo/poetry-*.log)
             $POETRY_HOME/bin/poetry --version
             rm -rdf /opt/pipx/logs/*.log
             $POETRY_HOME/bin/poetry add cryptography
