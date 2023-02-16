@@ -57,6 +57,7 @@ jobs:
             whoami
             echo $PATH
             echo $LD_LIBRARY_PATH
+            export CRYPTOGRAPHY_DONT_BUILD_RUST=1
             ls -l /opt/build_python/installed/bin
             ls -l /opt/build_python/installed/lib
             ls -l $(which python3)
