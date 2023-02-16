@@ -74,8 +74,10 @@ jobs:
             find / -iname Cargo.toml
             tree -apuC $CARGO_HOME
             sudo apt-get install build-essential libssl-dev libffi-dev pkg-config
+            cargo clean
             cargo init
             cargo update
+            RUSTC_LOG=trace cargo run --verbose
             find / -iname Cargo.toml
             find / -iname rustc
             python3 --version
