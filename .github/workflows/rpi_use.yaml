@@ -63,6 +63,7 @@ jobs:
             ls -l $(which python3)
             ls -l $(which cc)
             ls -l $(which gcc)
+            pip3 install wheel virtualenv
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
             chmod a+x /opt/repo/test-action/install_openssl.sh
             /opt/repo/test-action/install_openssl.sh
