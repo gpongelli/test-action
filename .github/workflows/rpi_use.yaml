@@ -1,8 +1,8 @@
 name: Use built image
 on:
-  push:
-    branches:
-      - 'main'
+#  push:
+#    branches:
+#      - 'main'
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages

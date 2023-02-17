@@ -1,6 +1,6 @@
 name: Build and run
 on:
-  push:
+#  push:
   workflow_dispatch:
 
 
