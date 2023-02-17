@@ -63,6 +63,7 @@ jobs:
             ls -l $(which python3)
             ls -l $(which cc)
             ls -l $(which gcc)
+            export CARGO_NET_GIT_FETCH_WITH_CLI=true
             chmod a+x /opt/repo/test-action/install_openssl.sh
             /opt/repo/test-action/install_openssl.sh
             CFLAGS="-I/opt/openssl/include" LDFLAGS="-L/opt/openssl/lib" pip wheel --no-binary :all: cryptography

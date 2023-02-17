@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 OPENSSL_VERSION="1.1.1t"
 CWD=$(pwd)
