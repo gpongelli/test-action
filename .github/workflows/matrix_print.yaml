@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-sw: [ $PY_311, $PY_310, $PY_39 ]
+        python-sw: [ ${{ env.PY_311 }}, ${{ env.PY_310 }}, ${{ env.PY_39 }} ]
         arch: [ armv6l, armv7l, aarch64 ]
         include:
         - arch: armv6l
