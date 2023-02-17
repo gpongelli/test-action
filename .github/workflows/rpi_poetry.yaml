@@ -42,10 +42,11 @@ jobs:
             whoami
             echo $PATH
             echo $LD_LIBRARY_PATH
-            export CRYPTOGRAPHY_DONT_BUILD_RUST=1
             sudo sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
+            export CRYPTOGRAPHY_DONT_BUILD_RUST=1
+            export CARGO_NET_GIT_FETCH_WITH_CLI=true
+            cargo fetch
             ls -lR $CARGO_HOME
-            sudo apt install curl
             python3 --version
             pip3 config -v list
             python3 -m pip install --upgrade pip
