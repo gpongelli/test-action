@@ -1,6 +1,6 @@
 name: Matrix print
 on:
-  push:
+  #push:
   workflow_dispatch:
 
 env:

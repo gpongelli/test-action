@@ -1,0 +1,53 @@
+name: Use built image
+on:
+  push:
+#    branches:
+#      - 'main'
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+
+jobs:
+  build:
+    name: POETRY
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-sw: ["3.9.16"]
+        arch: [armv7l]
+        include:
+# arm1176 is the CPU of BCM2835 which is the SOC of first generation RaspberryPi and RaspberryPi Zero.
+        - arch: armv7l
+          cpu: cortex-a7
+          base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.1/1.2.1-armv7l-py39.img.xz
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use release image
+        uses: pguyot/arm-runner-action@v2
+        id: arm_runner_install
+        with:
+          base_image: ${{ matrix.base_image }}
+          cpu: ${{ matrix.cpu }}
+          shell: bash -l
+          copy_repository_path: /opt/repo
+          image_additional_mb: 4096
+          exit_on_fail: false
+          commands: |
+            whoami
+            echo $PATH
+            echo $LD_LIBRARY_PATH
+            export CRYPTOGRAPHY_DONT_BUILD_RUST=1
+            sudo apt install curl
+            python3 --version
+            pip3 config -v list
+            python3 -m pip install --upgrade pip            
+            rm -rdf /opt/repo/poetry-*.log
+            curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 - --version 1.3.2
+            cat $(find /opt/repo/poetry-*.log)
+            $POETRY_HOME/bin/poetry --version
