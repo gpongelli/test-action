@@ -63,6 +63,9 @@ jobs:
             ls -l $(which python3)
             ls -l $(which cc)
             ls -l $(which gcc)
+            chmod a+x /opt/repo/test-action/install_openssl.sh
+            /opt/repo/test-action/install_openssl.sh
+            CFLAGS="-I/opt/openssl/include" LDFLAGS="-L/opt/openssl/lib" pip wheel --no-binary :all: cryptography
             cat /etc/profile.d/env.sh
             cat /etc/profile.d/rust.sh
             ls -lR /opt/repo
@@ -74,7 +77,6 @@ jobs:
             echo $CARGO_HOME
             echo "---rustup home---"
             echo $RUSTUP_HOME
-            curl https://sh.rustup.rs -sSf | bash -s -- -y --no-modify-path
             find / -iname Cargo.toml
             tree -apuC $CARGO_HOME
             sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc
