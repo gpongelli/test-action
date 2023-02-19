@@ -54,6 +54,9 @@ jobs:
             rustup update stable
             export CARGO_LOG=trace
             ls -lR $CARGO_HOME
+            cd $CARGO_HOME
+            git fetch
+            cd /opt/repo/test-action
             cargo init
             cargo fetch
             ls -lR ./.cargo
