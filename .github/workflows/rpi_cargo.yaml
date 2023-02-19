@@ -54,7 +54,9 @@ jobs:
             rustup update stable
             export CARGO_LOG=trace
             ls -lR $CARGO_HOME
+            cargo init
             cargo fetch
+            ls -lR ./.cargo
             cargo update
             python3 --version
             pip3 config -v list
