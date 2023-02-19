@@ -42,6 +42,8 @@ jobs:
           exit_on_fail: false
           commands: |
             whoami
+            cat /proc/cpuinfo
+            find / -iname raspberrypi_4b
             echo $PATH
             echo $LD_LIBRARY_PATH
             git config --global url.git@github.com:.insteadof https://github.com/ 
