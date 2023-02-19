@@ -44,6 +44,7 @@ jobs:
             whoami
             echo $PATH
             echo $LD_LIBRARY_PATH
+            git config --global url.git@github.com:.insteadof https://github.com/ 
             sudo sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
             export CRYPTOGRAPHY_DONT_BUILD_RUST=1
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
