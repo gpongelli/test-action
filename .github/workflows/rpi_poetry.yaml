@@ -55,6 +55,7 @@ jobs:
             cargo clean
             cargo fetch
             cargo update
+            find $CARGO_HOME -iname config            
             ls -lR $CARGO_HOME
             python3 --version
             pip3 config -v list
