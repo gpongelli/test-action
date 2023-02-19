@@ -49,8 +49,12 @@ jobs:
             sudo sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
             export CRYPTOGRAPHY_DONT_BUILD_RUST=1
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
+            sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc
+            rustup update stable
             cargo init
+            cargo clean
             cargo fetch
+            cargo update
             ls -lR $CARGO_HOME
             python3 --version
             pip3 config -v list
