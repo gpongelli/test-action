@@ -24,6 +24,7 @@ jobs:
 # arm1176 is the CPU of BCM2835 which is the SOC of first generation RaspberryPi and RaspberryPi Zero.
         - arch: armv7l
           cpu: cortex-a7
+          cpu_info: cpuinfo/raspberrypi_4b
           base_image: https://github.com/gpongelli/arm-runner-python/releases/download/1.2.1/1.2.1-armv7l-py39.img.xz
     steps:
       - uses: actions/checkout@v3
@@ -34,6 +35,7 @@ jobs:
         with:
           base_image: ${{ matrix.base_image }}
           cpu: ${{ matrix.cpu }}
+          cpu_info: ${{ matrix.cpu_info }}
           shell: bash -l
           copy_repository_path: /opt/repo
           image_additional_mb: 4096
