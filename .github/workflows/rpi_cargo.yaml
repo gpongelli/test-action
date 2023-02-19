@@ -50,7 +50,7 @@ jobs:
             sudo sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
             export CRYPTOGRAPHY_DONT_BUILD_RUST=1
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
-            sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc
+            sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc rust-all rustc cargo
             rustup update stable
             export CARGO_LOG=trace
             ls -lR $CARGO_HOME
