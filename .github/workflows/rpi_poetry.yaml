@@ -53,6 +53,7 @@ jobs:
             export CARGO_NET_GIT_FETCH_WITH_CLI=true
             sudo apt-get install build-essential libssl-dev libffi-dev pkg-config gcc
             rustup update stable
+            export CARGO_LOG=trace
             cargo init
             cargo clean
             cargo fetch
