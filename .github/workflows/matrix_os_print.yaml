@@ -1,0 +1,28 @@
+name: Matrix OS add variables
+on:
+
+  workflow_dispatch:
+
+
+jobs:
+  constraint:
+    name: constraint matrix ${{ matrix.arch }} - py${{ matrix.python-sw }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        python-version: [ 3.8, 3.9, "3.10", "3.11" ]
+        include:
+        - os: ubuntu-latest
+          tox_os: "lin"
+        - os: windows-latest
+          tox_os: "win"
+        - os: macos-latest
+          tox_os: "mac"
+
+    steps:
+      - name: print vars
+        run: |
+          echo ${{ matrix.os }}
+          echo ${{ matrix.python-version }}
+          echo ${{ matrix.tox_os }}
