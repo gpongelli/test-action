@@ -34,12 +34,9 @@ jobs:
 
     steps:
       - name: Setup variable
-        uses: actions/github-script@v6
         if: runner.os == 'Windows'
-        id: var
-        with:
-          script: |
-            core.setOutput('os_option', '/d');
+        run: |
+          echo "os_option=/d" >> $env:GITHUB_ENV
 
       - name: print vars
         run: |
@@ -47,4 +44,4 @@ jobs:
           echo ${{ matrix.python-version }}
           echo ${{ matrix.tox_os }}
           echo ${{ matrix.python-sw }}
-          echo -${{ vars.os_option }}-
+          echo $os_option
