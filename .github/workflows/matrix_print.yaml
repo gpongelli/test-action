@@ -79,7 +79,19 @@ jobs:
           base_image: aarch64-py39
           arm_tag: abc-$ARM_TAG-def
 
+    outputs:
+      os_option: ""
+
+
     steps:
+      - name: Setup variable
+        uses: actions/github-script@v6
+        if: runner.os == 'Windows'
+        id: var
+        with:
+          script: |
+            core.setOutput('os_option', '/d');
+
       - name: print vars
         run: |
           echo ${{ matrix.arch }}
@@ -88,6 +100,7 @@ jobs:
           echo ${{ matrix.base_image }}
           echo $ARM_TAG
           echo ${{ matrix.arm_tag }}
+          echo -${{ vars.os_option }}-
 
       - uses: actions/setup-python@v4
         with:
