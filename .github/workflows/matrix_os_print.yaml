@@ -36,7 +36,7 @@ jobs:
       - name: Setup variable
         if: runner.os == 'Windows'
         run: |
-          echo "os_option=/d" >> $GITHUB_ENV
+          echo "os_option=/d" >> $env:GITHUB_ENV
 
       - name: print vars
         run: |
@@ -44,4 +44,4 @@ jobs:
           echo ${{ matrix.python-version }}
           echo ${{ matrix.tox_os }}
           echo ${{ matrix.python-sw }}
-          echo $os_option
+          echo ${{ env.os_option }}
