@@ -22,12 +22,12 @@ permissions:
 
 
 jobs:
-  constraint:
+  constraint_job:
     name: constraint matrix ${{ matrix.arch }} - py${{ matrix.python-sw }}
-    runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
       matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
         python-sw: [ ${{ env.PY_311 }}, ${{ env.PY_310 }}, ${{ env.PY_39 }} ]
         arch: [ armv6l, armv7l, aarch64 ]
         include:
@@ -78,6 +78,8 @@ jobs:
           cpu: cortex-a53
           base_image: aarch64-py39
           arm_tag: abc-$ARM_TAG-def
+
+    runs-on: ${{ matrix.os }}
 
     outputs:
       os_option: ""
